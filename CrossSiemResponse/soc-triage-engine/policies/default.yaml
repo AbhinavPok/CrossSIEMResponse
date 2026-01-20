@@ -1,0 +1,9 @@
+- id: NO_AUTO_CONTAIN_EXEC
+  when:
+    min_risk: 70
+    entity_type: user
+  effect:
+    deny_actions:
+      - contain
+    require_approval: true
+  reason: Executive accounts require human approval

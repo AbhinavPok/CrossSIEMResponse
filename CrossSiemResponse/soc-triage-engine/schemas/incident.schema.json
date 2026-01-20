@@ -1,0 +1,117 @@
+{
+  "_comment": {
+    "purpose": "This schema defines the minimum, vendor-neutral structure an incident must follow before entering the SOC engine.",
+    "why_it_exists": "Different SIEMs and security tools generate incidents in different formats. This schema standardizes them into a single, predictable shape so enrichment, scoring, MITRE mapping, and AI reasoning can operate consistently.",
+    "required_fields": {
+      "incident_id": "Unique identifier from the source system (SIEM, SOAR, or local tool).",
+      "source": "Origin platform that produced the incident (e.g., sentinel, splunk, elastic, local).",
+      "title": "Short human-readable summary describing what triggered the incident.",
+      "severity": "Initial severity assigned by the source system.",
+      "timestamp": "Time the incident was created, in ISO-8601 format.",
+      "entities": "List of security-relevant objects involved in the incident (IPs, users, domains, etc.)."
+    },
+    "entities_explained": "Entities are the core input for verification and reasoning. Each entity has a type (what it is) and a value (its identifier). The engine uses entity type to decide which deterministic threat-intelligence checks to run.",
+    "optional_fields": "Tags, environment, and notes provide additional context but are not required for the incident to be processed.",
+    "design_principles": [
+      "Vendor-neutral and SIEM-agnostic",
+      "Minimal required data to reduce onboarding friction",
+      "Explicit typing for deterministic enrichment",
+      "Compatible with both cloud-native and local deployments"
+    ]
+  },
+
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SOC Incident Input Schema v1",
+  "description": "Vendor-neutral incident schema for SOC triage engine",
+  "type": "object",
+
+  "required": [
+    "incident_id",
+    "source",
+    "title",
+    "severity",
+    "timestamp",
+    "entities"
+  ],
+
+  "properties": {
+    "incident_id": {
+      "type": "string",
+      "description": "Unique identifier of the incident from the source system"
+    },
+
+    "source": {
+      "type": "string",
+      "description": "Origin of the incident (e.g. sentinel, splunk, elastic, local)"
+    },
+
+    "title": {
+      "type": "string",
+      "description": "Human-readable incident title"
+    },
+
+    "severity": {
+      "type": "string",
+      "enum": ["informational", "low", "medium", "high", "critical"],
+      "description": "Incident severity level"
+    },
+
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time the incident was created"
+    },
+
+    "entities": {
+      "type": "array",
+      "description": "Entities involved in the incident",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/entity"
+      }
+    },
+
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional tags or labels from the source system"
+    },
+
+    "environment": {
+      "type": "string",
+      "description": "Environment where the incident occurred (prod, dev, test)"
+    },
+
+    "notes": {
+      "type": "string",
+      "description": "Optional analyst or system notes"
+    }
+  },
+
+  "definitions": {
+    "entity": {
+      "type": "object",
+      "required": ["type", "value"],
+
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["ip", "domain", "url", "hash", "user", "host"],
+          "description": "Type of entity"
+        },
+
+        "value": {
+          "type": "string",
+          "description": "Value of the entity (e.g. IP address, username, hash)"
+        },
+
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Optional confidence score provided by the source system"
+        }
+      }
+    }
+  }
+}

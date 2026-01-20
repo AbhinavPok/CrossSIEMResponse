@@ -120,3 +120,6 @@ connection with the software or the use or other dealings in the software.
 
 By using, cloning, or modifying this project, you acknowledge that you have read,
 understood, and agreed to this disclaimer.
+
+## 10. Final
+Have fun, tweak the code of project as you would want, implement other features, remove feature and feel free to send me a message on your journey.

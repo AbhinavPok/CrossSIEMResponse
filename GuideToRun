@@ -1,0 +1,182 @@
+Overview
+
+This document explains how to run the engine locally, submit requests, and understand the results it produces.
+
+The engine is designed to mirror how a human analyst reasons through security events. It does not require a cloud account, SIEM, or external platform. All logic is explicit, explainable, and safe to experiment with.
+
+Prerequisites
+
+Before starting, ensure the following are available:
+
+• Python 3.10 or newer
+• Project dependencies installed
+• A local terminal or command prompt
+
+Using a virtual environment is recommended but not required.
+
+Starting the Engine
+
+From the project root directory, start the service by running:
+
+python -m uvicorn adapters.local.api:app --reload
+
+Once the service is running, open a browser and navigate to:
+
+http://127.0.0.1:8000/docs
+
+This opens an interactive interface where requests can be submitted and responses inspected without writing any code.
+
+Request Structure
+
+Each request contains two main sections: Incident and Signals.
+
+Incident
+
+The Incident section describes what happened.
+
+Required fields:
+• incident_id
+• source
+• title
+• severity
+• timestamp
+
+Optional fields:
+• entities (users, IPs, domains)
+• tags
+• environment
+• notes
+
+This section represents the core event being evaluated.
+
+Signals
+
+Signals provide context and enrichment to support decision-making.
+
+Examples include:
+• behavioral anomalies
+• reputation data
+• historical indicators
+• environment context
+
+Signals are optional, but richer signals improve clarity and accuracy.
+
+Example Request
+
+Incident:
+
+ID: example-001
+
+Title: Suspicious account activity
+
+Severity: High
+
+Entity: user@corp.com
+
+Signals:
+
+Login anomaly detected
+
+MFA disabled
+
+Prior incidents observed
+
+Submit this request to the /triage endpoint.
+
+Understanding the Output
+
+Each response is structured to explain why conclusions were reached.
+
+Risk Evaluation
+
+Includes:
+• a numeric risk score
+• a confidence level
+• explicit reasons explaining how the score was calculated
+
+Nothing is inferred silently.
+
+Behavior Mapping
+
+Observed patterns are mapped to known adversary behaviors with:
+• technique names
+• confidence levels
+• evidence directly tied to the input signals
+
+This makes the reasoning auditable and transparent.
+
+Policy Decisions
+
+When policies are enabled, the response clearly states:
+• which actions are allowed
+• which actions are restricted
+• whether human approval is required
+• why those decisions were made
+
+Enabling Policy Controls
+
+Policies are defined using YAML files.
+
+To enable policies, set the following environment variable:
+
+POLICY_FILE = policies/default.yaml
+
+Policies control decision boundaries such as:
+• automated account actions
+• approval requirements
+• restricted response paths
+
+Human-Readable Summary
+
+Each response includes a summary that:
+• explains the situation in plain language
+• highlights primary risk drivers
+• recommends a reasonable next step
+
+This section is intended for handoffs, escalation notes, and quick understanding.
+
+Advisory Layer (Optional)
+
+The /triage-ai endpoint adds an advisory-only layer.
+
+Key characteristics:
+• scores and decisions never change
+• output is schema validated
+• safe to disable at any time
+
+By default, this layer runs in offline mode.
+
+Enabling Live Advisory Reasoning (Optional)
+
+To enable live advisory reasoning, set:
+
+LLM_API_KEY
+LLM_MODEL
+LLM_OFFLINE = 0
+
+To disable again:
+
+LLM_OFFLINE = 1
+
+The core engine behaves the same either way.
+
+Running Tests
+
+Run the full test suite using:
+
+pytest
+
+Tests cover:
+• scoring logic
+• policy enforcement
+• summaries
+• advisory fallback behavior
+• schema validation
+
+Intended Use
+
+This engine is intended for:
+• learning
+• experimentation
+• portfolio demonstration
+• reasoning about security decisions

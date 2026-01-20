@@ -59,35 +59,35 @@ but never replaces deterministic security logic.
 
 ## Architecture Overview
 
-Client / SIEM / User
-|
-v
-+---------------------+
-| FastAPI Adapter |
-| (HTTP Interface) |
-+---------------------+
-|
-v
-+---------------------+
-| Deterministic |
-| Triage Pipeline |
-+---------------------+
-|
-+-----------------------------+
-| |
-v v
-+------------------+ +------------------+
-| Policy Engine | | Summary Builder |
-+------------------+ +------------------+
-|
-v
-+---------------------+
-| Optional AI Layer |
-| (Advisory Only) |
-+---------------------+
-|
-v
-Structured JSON Response
+Client / SIEM / User <br>
+|<br>
+v<br>
++---------------------+<br>
+| FastAPI Adapter |<br>
+| (HTTP Interface) |<br>
++---------------------+<br>
+|<br>
+v<br>
++---------------------+<br>
+| Deterministic |<br>
+| Triage Pipeline |<br>
++---------------------+<br>
+|<br>
++-----------------------------+<br>
+| |<br>
+v v<br>
++------------------+ +------------------+<br>
+| Policy Engine | | Summary Builder |<br>
++------------------+ +------------------+<br>
+|<br>
+v<br>
++---------------------+<br>
+| Optional AI Layer |<br>
+| (Advisory Only) |<br>
++---------------------+<br>
+|<br>
+v<br>
+Structured JSON Response<br>
 ## API Endpoints
 
 | Endpoint        | Description |

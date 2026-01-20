@@ -2,7 +2,7 @@
 
 This project is provided for **educational, research, and demonstration purposes only**.
 
-The SOC Triage Engine is **not a production security product** and should not be relied upon
+The SOC Engine is **not a production security product** and should not be relied upon
 as the sole mechanism for incident detection, response, or containment in live environments.
 
 ---
@@ -97,7 +97,7 @@ This project does not claim compliance with any specific regulatory framework
 ## 7. Educational Intent
 
 This repository exists to:
-- Demonstrate SOC triage concepts
+- Demonstrate SOC  concepts
 - Showcase deterministic security automation design
 - Explore **safe, bounded AI-assisted analysis patterns**
 

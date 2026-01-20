@@ -152,12 +152,12 @@ Example request body:
   }
 }
 
+<br>
+
 
 Submit this payload to the /triage endpoint.
-
-Enabling Policy Controls
-
-Policies are defined using YAML.
+  Enabling Policy Controls
+  Policies are defined using YAML.
 
 Enable them by setting:
 
@@ -165,14 +165,12 @@ export POLICY_FILE=policies/default.yaml
 
 
 Policies control boundaries such as:
-
-automated account actions
-
-approval requirements
-
-restricted response paths
+  automated account actions
+  approval requirements
+  restricted response paths
 
 Enabling Live Advisory Reasoning (Optional)
+
 export LLM_API_KEY=your_key
 export LLM_MODEL=gpt-4o-mini
 export LLM_OFFLINE=0
@@ -184,38 +182,22 @@ export LLM_OFFLINE=1
 
 
 The core engine behaves the same either way.
+  Running Tests
+  Run all tests with:
 
-Running Tests
-
-Run all tests with:
-
-pytest
+  pytest
 
 
 Tests cover:
-
 scoring logic
-
 policy enforcement
-
 summaries
-
 advisory fallback behavior
-
 schema validation
 
 Intended Use
 
 This engine is meant for:
+learning experimentation and reasoning about security decisions
 
-learning
 
-experimentation
-
-portfolio demonstration
-
-reasoning about security decisions
-
-It is not automated response software.
-
-Every decision is visible and explainable.

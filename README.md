@@ -1,4 +1,6 @@
 # CrossSIEMResponse
+
+#Please read all the files
 # SOC Triage Engine (Local)
 
 A deterministic SOC triage engine that converts raw security alerts into
